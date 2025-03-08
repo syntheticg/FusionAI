@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 import base64
 from io import BytesIO
 from PIL import Image
-from g4f.cookies import set_cookies_dir, read_cookie_files
+from g4f.cookies import set_cookies_dir
 import g4f.debug
 
 app = Flask(__name__)
@@ -14,8 +14,14 @@ g4f.debug.logging = True
 
 # atur dan baca cookies dari folder har_and_cookies
 cookies_dir = os.path.join(os.path.dirname(__file__), "har_and_cookies")
+
+# buat folder jika belum ada
+if not os.path.exists(cookies_dir):
+    os.makedirs(cookies_dir)
+
+# atur direktori cookies
 set_cookies_dir(cookies_dir)
-read_cookie_files(cookies_dir)
+print(f"Cookies directory set to: {cookies_dir}")
 
 # fungsi untuk memuat model dari folder models atau models/visionmodels
 def load_model(model_name, is_vision=False):
@@ -83,4 +89,5 @@ def vision_model_endpoint(model_name):
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7860)
+    port = int(os.environ.get("PORT", 3000))  # gunakan port default railway
+    app.run(host='0.0.0.0', port=port)
