@@ -1,0 +1,4 @@
+flask
+g4f
+pillow
+curl_cffi
