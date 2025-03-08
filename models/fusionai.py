@@ -6,7 +6,7 @@ def generate_response(prompt):
         # panggil api g4f untuk mendapatkan response
         response = g4f.ChatCompletion.create(
             model="o3-mini",
-            provider=g4f.Provider.Liaobots,  # pilih provider yang didukung
+            provider=g4f.Provider.Blackbox,  # pilih provider yang didukung
             messages=[
                 {"role": "system", "content": ""},
                 {"role": "user", "content": prompt},
